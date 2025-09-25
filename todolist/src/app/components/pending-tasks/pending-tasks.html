@@ -1,0 +1,15 @@
+<div class="card h-100">
+    <div class="card-header tasks bg-primary text-white">
+        Pending Tasks
+    </div>
+    <ul class="list-group" id="202">
+        <!---->
+        @for (task of pendingTasks(); track task.id) {
+            @if (searchQuery === '') {
+            <app-task [id]="task.id" [title]="task.name" [taskStatus]="'pending'"/>
+            } @else if (task.name.toLocaleLowerCase().includes(searchQuery)) {
+                <app-task [id]="task.id" [title]="task.name" [taskStatus]="'pending'"/>
+            }
+        }
+    </ul>
+</div>

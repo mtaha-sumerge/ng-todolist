@@ -1,0 +1,15 @@
+<div class="card h-100">
+    <div class="card-header bg-success text-white">
+        Completed Tasks
+    </div>
+    <ul class="list-group" id="200">
+        <!---->
+        @for (task of completedTasks(); track task.id) {
+            @if (searchQuery === '') {
+            <app-task [id]="task.id" [title]="task.name" [taskStatus]="'completed'"/>
+            } @else if (task.name.toLocaleLowerCase().includes(searchQuery)) {
+                <app-task [id]="task.id" [title]="task.name" [taskStatus]="'completed'"/>
+            }
+        }
+    </ul>
+</div>
