@@ -1,7 +1,6 @@
 import { Component, inject, Input, signal } from '@angular/core';
-import { TasksService } from '../../TasksService';
-import { TaskI } from '../../TaskI';
-import { switchMap } from 'rxjs';
+import { TasksService } from '../../services/TasksService';
+import { TaskI } from '../../models/TaskI';
 
 @Component({
   selector: 'app-task',

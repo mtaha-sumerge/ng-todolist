@@ -1,0 +1,5 @@
+<section class="search-task">
+    <button id="mode" class="btn btn-outline-secondary" (click)="toggleMode()">{{ wannaAdd ? 'Search' : 'Add' }}</button>
+    <input type="text" [placeholder]="wannaAdd ? 'Add a task' : 'Search for a task'" id="input" #input (input)="!wannaAdd && searchTask(input.value)">
+    <button id="add" class="btn btn-outline-primary" [hidden]="!wannaAdd" (click)="addTask(input.value); input.value = ''">Add</button>
+</section>

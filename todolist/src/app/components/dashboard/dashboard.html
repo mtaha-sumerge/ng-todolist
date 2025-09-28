@@ -1,0 +1,22 @@
+<div class="wrapper">
+  <div class="dashboard">
+    <!-- Logout button -->
+    <div class="text-end mb-3">
+      <button class="btn btn-danger" (click)="logout()">Logout</button>
+    </div>
+    
+    <app-search-add (query)="query = $event"></app-search-add>
+
+    <div class="container my-4">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <app-pending-tasks [searchQuery]="query" />
+        </div>
+        <div class="col-md-6">
+          <app-completed-tasks [searchQuery]="query" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

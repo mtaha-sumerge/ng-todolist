@@ -1,12 +1,13 @@
-import { Component, computed, DestroyRef, inject, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { Task } from "../task/task";
-import { TasksService } from '../../TasksService';
+import { TasksService } from '../../services/TasksService';
 
 @Component({
   selector: 'app-completed-tasks',
+  standalone: true,
   imports: [Task],
   templateUrl: './completed-tasks.html',
-  styleUrl: './completed-tasks.css'
+  styleUrl: '../../app.css'
 })
 export class CompletedTasks implements OnInit {
   private tasksService = inject(TasksService);

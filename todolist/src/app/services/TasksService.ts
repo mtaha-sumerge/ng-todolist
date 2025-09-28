@@ -1,9 +1,9 @@
 import { inject, Injectable, signal } from "@angular/core";
-import firebase from "firebase/compat/app";
-import { firebaseConfig } from "./firestore";
+import { firebaseConfig } from "../config/firestore";
 import { HttpClient } from "@angular/common/http";
 import { catchError, map, switchMap, tap, throwError } from "rxjs";
-import { TaskI } from "./TaskI";
+import { TaskI } from "../models/TaskI";
+import { AuthService } from "../services/AuthService";
 
 @Injectable({
     providedIn: 'root'
@@ -22,10 +22,18 @@ export class TasksService {
     private completedTasks = signal<TaskI[]>([]);
     loadedCompletedTasks = this.completedTasks.asReadonly();
 
+    private authService = inject(AuthService);
+
+    private getAuthHeaders() {
+        const token = sessionStorage.getItem('authToken');
+        return token
+            ? { headers: { Authorization: `Bearer ${token}` } }
+            : {};
+    }
 
     loadPendingTasks() {
         return this.httpClient
-            .get(this.PENDING_COLLECTION_PATH)
+            .get(this.PENDING_COLLECTION_PATH, this.getAuthHeaders())
             .pipe(
                 map((res: any) => {
                     const docs = res.documents ?? [];
@@ -42,7 +50,7 @@ export class TasksService {
 
     loadCompletedTasks() {
         return this.httpClient
-            .get(this.COMPLETED_COLLECTION_PATH)
+            .get(this.COMPLETED_COLLECTION_PATH, this.getAuthHeaders())
             .pipe(
                 map((res: any) => {
                     const docs = res.documents ?? [];
@@ -62,7 +70,8 @@ export class TasksService {
             fields: {
                 name: { stringValue: taskName }
             }
-        }).pipe(
+        }, this.getAuthHeaders()
+        ).pipe(
             tap((res: any) => {
                 const newTask: TaskI = {
                     id: res.name.split('/').pop(),
@@ -79,7 +88,7 @@ export class TasksService {
         if (status === 'completed') {
             const completedTasks = this.completedTasks();
             this.completedTasks.set(completedTasks.filter(t => t.id !== taskId));
-            return this.httpClient.delete(this.COMPLETED_COLLECTION_PATH + '/' + taskId)
+            return this.httpClient.delete(this.COMPLETED_COLLECTION_PATH + '/' + taskId, this.getAuthHeaders())
                 .pipe(
                     catchError(() => {
                         this.completedTasks.set(completedTasks);
@@ -90,7 +99,7 @@ export class TasksService {
         else {
             const pendingTasks = this.pendingTasks();
             this.pendingTasks.set(pendingTasks.filter(t => t.id !== taskId));
-            return this.httpClient.delete(this.PENDING_COLLECTION_PATH + '/' + taskId)
+            return this.httpClient.delete(this.PENDING_COLLECTION_PATH + '/' + taskId, this.getAuthHeaders())
                 .pipe(
                     catchError((error) => {
                         this.pendingTasks.set(pendingTasks);
@@ -110,13 +119,14 @@ export class TasksService {
             const movedTask: TaskI = { ...task };
             this.completedTasks.set([...currentCompleted, movedTask]);
 
-            return this.httpClient.delete(`${this.PENDING_COLLECTION_PATH}/${encodeURIComponent(task.id)}`).pipe(
+            return this.httpClient.delete(`${this.PENDING_COLLECTION_PATH}/${encodeURIComponent(task.id)}`, this.getAuthHeaders()).pipe(
                 switchMap(() => // switchMap bt switch to another observable
                     this.httpClient.post(this.COMPLETED_COLLECTION_PATH, {
                         fields: {
                             name: { stringValue: task.name }
                         }
-                    })
+                    }, this.getAuthHeaders()
+                )
                 ),
                 catchError(() => {
                     this.pendingTasks.set(currentPending);
@@ -132,14 +142,15 @@ export class TasksService {
             const movedTask: TaskI = { ...task };
             this.pendingTasks.set([...currentPending, movedTask]);
 
-            return this.httpClient.delete(`${this.COMPLETED_COLLECTION_PATH}/${encodeURIComponent(task.id)}`).pipe( 
+            return this.httpClient.delete(`${this.COMPLETED_COLLECTION_PATH}/${encodeURIComponent(task.id)}`, this.getAuthHeaders()).pipe(
                 // tap(() => console.log(`${this.COMPLETED_COLLECTION_PATH}/${encodeURIComponent(task.id)}`)),
                 switchMap(() =>
                     this.httpClient.post(this.PENDING_COLLECTION_PATH, {
                         fields: {
                             name: { stringValue: task.name }
                         }
-                    })
+                    }, this.getAuthHeaders()
+                )
                 ),
                 catchError((error) => {
                     this.completedTasks.set(currentCompleted);

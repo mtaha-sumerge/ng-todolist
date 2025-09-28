@@ -1,9 +1,10 @@
-import { Component, computed, DestroyRef, inject, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { Task } from "../task/task";
-import { TasksService } from '../../TasksService';
+import { TasksService } from '../../services/TasksService';
 
 @Component({
   selector: 'app-pending-tasks',
+  standalone: true,
   imports: [Task],
   templateUrl: './pending-tasks.html',
   styleUrl: './pending-tasks.css'
