@@ -1,6 +1,7 @@
 <div class="wrapper">
   <div class="dashboard">
     <!-- Search bar-->
+<!--    TODO extract search bar into compoenent!-->
     <section class="search-task">
       <input type="text" placeholder="Search for a task" id="search-input" (input)="searchTask($event)">
     </section>
@@ -11,6 +12,8 @@
           <app-pending-tasks [searchQuery]="query" />
         </div>
         <div class="col-md-6">
+<!--          TODO styling issue when number of tasks are not equal remove row div and style the container make its elements act like rows
+ or do any workaround-->
           <app-completed-tasks [searchQuery]="query" />
         </div>
       </div>
@@ -19,6 +22,7 @@
 
     <div class="row g-4">
       <!-- Add task bar-->
+<!--      TODO extract to separate component-->
       <section class="search-task">
         <input type="text" placeholder="Add a task" #taskInput>
         <button id="add" class="btn btn-outline-primary" (click)="addTask(taskInput.value); taskInput.value = ''">Add</button>

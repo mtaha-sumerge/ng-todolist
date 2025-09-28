@@ -7,3 +7,6 @@ export const firebaseConfig = {
     messagingSenderId: "417090112488",
     appId: "1:417090112488:web:9127859107a14eecfef25d"
 };
+
+
+//todo move to config folder

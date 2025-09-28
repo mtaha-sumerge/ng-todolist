@@ -5,6 +5,8 @@ import { HttpClient } from "@angular/common/http";
 import { catchError, map, switchMap, tap, throwError } from "rxjs";
 import { TaskI } from "./TaskI";
 
+//todo move to services folder
+
 @Injectable({
     providedIn: 'root'
 })
@@ -132,7 +134,7 @@ export class TasksService {
             const movedTask: TaskI = { ...task };
             this.pendingTasks.set([...currentPending, movedTask]);
 
-            return this.httpClient.delete(`${this.COMPLETED_COLLECTION_PATH}/${encodeURIComponent(task.id)}`).pipe( 
+            return this.httpClient.delete(`${this.COMPLETED_COLLECTION_PATH}/${encodeURIComponent(task.id)}`).pipe(
                 // tap(() => console.log(`${this.COMPLETED_COLLECTION_PATH}/${encodeURIComponent(task.id)}`)),
                 switchMap(() =>
                     this.httpClient.post(this.PENDING_COLLECTION_PATH, {
