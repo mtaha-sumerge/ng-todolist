@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import 'zone.js'
+import 'zone.js/testing';
 import { Auth } from './auth';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 
 describe('Auth', () => {
   let component: Auth;
@@ -8,7 +10,8 @@ describe('Auth', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Auth]
+      imports: [Auth],
+      providers: [HttpClient, HttpHandler]
     })
     .compileComponents();
 

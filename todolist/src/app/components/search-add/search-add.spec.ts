@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import 'zone.js'
+import 'zone.js/testing';
 import { SearchAdd } from './search-add';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 
 describe('SearchAdd', () => {
   let component: SearchAdd;
@@ -8,7 +10,8 @@ describe('SearchAdd', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SearchAdd]
+      imports: [SearchAdd],
+      providers: [HttpClient, HttpHandler]
     })
     .compileComponents();
 

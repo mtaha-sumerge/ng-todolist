@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { Task } from './task';
+import 'zone.js';
+import 'zone.js/testing';
+import { Task } from '../components/task/task';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 
 describe('Task', () => {
   let component: Task;
@@ -8,7 +10,8 @@ describe('Task', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Task]
+      imports: [Task],
+      providers: [HttpClient, HttpHandler]
     })
     .compileComponents();
 
