@@ -1,5 +1,31 @@
 <section class="search-task">
-    <button id="mode" class="btn btn-outline-secondary" (click)="toggleMode()">{{ wannaAdd ? 'Search' : 'Add' }}</button>
-    <input type="text" [placeholder]="wannaAdd ? 'Add a task' : 'Search for a task'" id="input" #input (input)="!wannaAdd && searchTask(input.value)">
-    <button id="add" class="btn btn-outline-primary" [hidden]="!wannaAdd" (click)="addTask(input.value); input.value = ''">Add</button>
+
+    <!--Search/Add mode-->
+    <button id="mode" class="btn btn-outline-secondary" (click)="toggleMode()">
+        {{ wannaAdd ? 'Search' : 'Add' }}
+    </button>
+
+    <!--Search task-->
+    <mat-form-field appearance="fill" [hidden]="wannaAdd" class="w-100">
+        <input type="text" matInput [formControl]="searchCtrl" [matAutocomplete]="auto" >
+        <button matSuffix class="btn btn-outline-danger ms-2" [hidden]="!searchCtrl.value" aria-label="Clear"
+            (click)="searchCtrl.setValue(''); searchTask('')">
+            Clear
+        </button>
+    </mat-form-field>
+
+    <mat-autocomplete #auto="matAutocomplete" [hidden]="wannaAdd" (optionSelected)="searchTask($event.option.value)">
+        @for (task of filteredTasks(); track task) {
+            <mat-option [value]="task">
+                {{ task }}
+            </mat-option>
+        }
+    </mat-autocomplete>
+
+    <!--Add task-->
+    <input type="text" placeholder="Add a task" id="input" [hidden]="!wannaAdd" #input>
+    <button id="add" class="btn btn-outline-primary" [hidden]="!wannaAdd" (click)="addTask(input.value); input.value = ''">
+        Add
+    </button>
+
 </section>

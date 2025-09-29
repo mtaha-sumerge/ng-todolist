@@ -24,6 +24,7 @@ export class TasksService {
 
     private authService = inject(AuthService);
 
+    // Gets the token of the current session - if any
     private getAuthHeaders() {
         const token = sessionStorage.getItem('authToken');
         return token
@@ -31,6 +32,7 @@ export class TasksService {
             : {};
     }
 
+    // Requests data from pending_tasks collection
     loadPendingTasks() {
         return this.httpClient
             .get(this.PENDING_COLLECTION_PATH, this.getAuthHeaders())
@@ -48,6 +50,7 @@ export class TasksService {
             );
     }
 
+    // Requests data from completed_tasks collection
     loadCompletedTasks() {
         return this.httpClient
             .get(this.COMPLETED_COLLECTION_PATH, this.getAuthHeaders())
@@ -65,6 +68,7 @@ export class TasksService {
             );
     }
 
+    // Posts new task
     addTask(taskName: string) {
         return this.httpClient.post(this.PENDING_COLLECTION_PATH, {
             fields: {
@@ -82,7 +86,7 @@ export class TasksService {
         );
     }
 
-
+    // Deletes existing task
     removeTask(taskId: string, status: 'pending' | 'completed') {
 
         if (status === 'completed') {
@@ -109,6 +113,7 @@ export class TasksService {
         }
     }
 
+    // Bidirectional moving of existing task
     moveTask(task: TaskI, from: 'pending' | 'completed') {
         if (from === 'pending') {
 

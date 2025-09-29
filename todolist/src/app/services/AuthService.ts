@@ -20,10 +20,12 @@ export class AuthService {
 
     private _token: string | null = null;
 
+    // Getter
     get token(): string | null {
         return this._token;
     }
 
+    // Posts new credentials and stores the authorization token
     signUp(email: string, password: string) {
         return this.httpClient.post<AuthResponseData>(`https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${firebaseConfig.apiKey}`,
             {
@@ -39,6 +41,7 @@ export class AuthService {
         );
     }
 
+    // Checks user credentials and stores his token
     login(email: string, password: string) {
         return this.httpClient.post<AuthResponseData>(`https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${firebaseConfig.apiKey}`,
             {
@@ -54,6 +57,7 @@ export class AuthService {
         );
     }
 
+    // Clears the session token
     logout() {
         this._token = null;
         sessionStorage.removeItem('authToken');

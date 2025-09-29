@@ -22,16 +22,18 @@ export class Task {
 
   private tasksService = inject(TasksService);
 
+  // Moves task from pending to completed
   doTask() {
     const task: TaskI = { id: this.id, name: this.title };
     this.tasksService.moveTask(task, 'pending').subscribe(() => this.status.set('completed'));
   }
 
+  // Moves task from completed to pending
   undoTask() {
     const task: TaskI = { id: this.id, name: this.title };
     this.tasksService.moveTask(task, 'completed').subscribe(() => this.status.set('pending'));
   }
-
+  
   removeTask() {
     this.tasksService.removeTask(this.id, this.status()!).subscribe();
   }

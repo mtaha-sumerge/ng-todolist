@@ -1,6 +1,8 @@
-import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit, Output } from '@angular/core';
 import { Task } from "../task/task";
 import { TasksService } from '../../services/TasksService';
+import { EventEmitter } from 'stream';
+import { TaskI } from '../../models/TaskI';
 
 @Component({
   selector: 'app-pending-tasks',
