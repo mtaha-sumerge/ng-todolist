@@ -3,7 +3,6 @@ import 'zone.js'
 import 'zone.js/testing';
 import { PendingTasks } from '../components/pending-tasks/pending-tasks';
 import { HttpClient, HttpHandler } from '@angular/common/http';
-import { TasksService } from '../services/TasksService';
 
 describe('PendingTasks', () => {
   let component: PendingTasks;
@@ -31,14 +30,4 @@ describe('PendingTasks', () => {
     let compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('.card-header').textContent.trim()).toBe('Pending Tasks');
   })
-
-  // it('should use pending tasks from the tasks service', () => {
-  //   fixture = TestBed.createComponent(PendingTasks);
-  //   let pending_tasks = fixture.debugElement.componentInstance;
-  //   let service = fixture.debugElement.injector.get(TasksService);
-  //   fixture.detectChanges();
-  //   console.log(service.loadCompletedTasks);
-  //   console.log(pending_tasks.pendingTasks);
-  //   expect(service.loadCompletedTasks().subscribe()).toEqual(pending_tasks.loadedPendingTasks);
-  // })
 });

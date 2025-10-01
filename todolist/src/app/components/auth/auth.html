@@ -15,9 +15,9 @@
         <input type="password" id="password" class="form-control" ngModel name="password" required minlength="6" />
       </div>
       <div class="text-center">
-        <button class="btn btn-primary" type="submit" [disabled]="!authForm.valid">{{ wannaLogin ? 'Log In' : 'Sign Up'
+        <button class="btn btn-primary" id="submit" type="submit" [disabled]="!authForm.valid">{{ wannaLogin ? 'Log In' : 'Sign Up'
           }}</button>
-        <button class="btn btn-secondary ms-2" (click)="toggleLogin()" type="button">Switch to {{ wannaLogin ? 'Sign Up'
+        <button class="btn btn-secondary ms-2" id="toggle" (click)="toggleLogin()" type="button">Switch to {{ wannaLogin ? 'Sign Up'
           : 'Log In' }}</button>
       </div>
     </form>

@@ -2,7 +2,7 @@
   <div class="dashboard">
     <!-- Logout button -->
     <div class="text-end mb-3">
-      <button class="btn btn-danger" (click)="logout()">Logout</button>
+      <button class="btn btn-danger" id="logout" (click)="logout()">Logout</button>
     </div>
     
     <app-search-add (query)="query = $event"></app-search-add>

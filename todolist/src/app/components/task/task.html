@@ -1,19 +1,19 @@
 <li class="list-group-item task-item">
   <div class="d-flex justify-content-between align-items-center w-100">
-    <div class="d-flex align-items-center flex-grow-1">
+    <div class="d-flex align-items-center flex-grow-1" id="title">
         {{ title }}
     </div>
     @if (status() === 'pending') {
-        <button class="btn btn-sm btn-outline-success ms-2" (click)="doTask()">
+        <button class="btn btn-sm btn-outline-success ms-2" id="done" (click)="doTask()">
             Done
         </button>
     } 
     @else if (status() === 'completed') {
-        <button class="btn btn-sm btn-outline-primary ms-2" (click)="undoTask()">
+        <button class="btn btn-sm btn-outline-primary ms-2" id="undone" (click)="undoTask()">
             Undone
         </button>
     }
-    <button class="btn btn-sm btn-outline-danger ms-2" (click)="removeTask()">
+    <button class="btn btn-sm btn-outline-danger ms-2" id="delete" (click)="removeTask()">
         Delete
     </button>
   </div>

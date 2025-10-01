@@ -33,3 +33,10 @@ body {
   // Reset the user agent margin.
   margin: 0;
 }
+
+
+.autocomplete-search{
+  @include mat.autocomplete-overrides((
+    background-color: orange
+  ))
+}

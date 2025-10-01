@@ -3,7 +3,7 @@ import { inject, Injectable } from "@angular/core";
 import { firebaseConfig } from "../config/firestore";
 import { tap } from "rxjs";
 
-interface AuthResponseData {
+export interface AuthResponseData {
     kind: string,
     idToken: string,
     email: string,
@@ -48,7 +48,7 @@ export class AuthService {
                 email: email,
                 password: password,
                 returnSecureToken: true
-            }
+            },
         ).pipe(
             tap(res => {
                 this._token = res.idToken;

@@ -6,7 +6,7 @@
     </button>
 
     <!--Search task-->
-    <mat-form-field appearance="fill" [hidden]="wannaAdd" class="w-100">
+    <mat-form-field appearance="fill" id="search-field" [hidden]="wannaAdd" class="w-100">
         <input type="text" matInput [formControl]="searchCtrl" [matAutocomplete]="auto" >
         <button matSuffix class="btn btn-outline-danger ms-2" [hidden]="!searchCtrl.value" aria-label="Clear"
             (click)="searchCtrl.setValue(''); searchTask('')">
@@ -14,7 +14,7 @@
         </button>
     </mat-form-field>
 
-    <mat-autocomplete #auto="matAutocomplete" [hidden]="wannaAdd" (optionSelected)="searchTask($event.option.value)">
+    <mat-autocomplete #auto="matAutocomplete" id="autocomplete-fields" [hidden]="wannaAdd" (optionSelected)="searchTask($event.option.value)">
         @for (task of filteredTasks(); track task) {
             <mat-option [value]="task">
                 {{ task }}
